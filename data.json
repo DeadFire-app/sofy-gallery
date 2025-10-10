@@ -1,5 +1,17 @@
 [
   {
+    "id": 1760111272568,
+    "title": "Sofy Gabardina (XXXL)",
+    "description": "Tela: Gabardina · Talles: XXXL · Precio: $2000 ARS",
+    "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_0.jpg",
+    "tags": [
+      "gabardina",
+      "xxxl",
+      "auto"
+    ],
+    "createdAt": "2025-10-10T15:47:52.568Z"
+  },
+  {
     "id": 1760111222487,
     "title": "Sofy Crepé (S)",
     "description": "Tela: Crepé · Talles: S · Precio: $1000 ARS",
