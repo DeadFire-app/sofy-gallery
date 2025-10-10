@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>sofy — Galería Premium</title>
+    <meta name="description" content="Galería dinámica con UI/UX premium, animaciones fluidas y splash sofy." />
+
+    <!-- Tipografía -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <!-- Splash / Intro “sofy” -->
+    <!-- Se oculta automáticamente cuando el contenido está listo -->
+    <div id="splash" class="splash" aria-hidden="true">
+      <div class="splash-bg"></div>
+      <div class="splash-center">
+        <h1 class="splash-logo" aria-label="sofy">
+          <span>s</span><span>o</span><span>f</span><span>y</span>
+        </h1>
+        <div class="splash-spinner" role="progressbar" aria-valuetext="Cargando"></div>
+      </div>
+    </div>
+
+    <!-- Fondo animado general -->
+    <div class="bg-animated" aria-hidden="true"></div>
+
+    <header class="site-header container">
+      <div class="brand" aria-label="sofy marca">
+        <span class="logo-dot" aria-hidden="true"></span>
+        <strong>sofy</strong><span class="thin">gallery</span>
+      </div>
+
+      <!-- Navegación simple y responsive -->
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="Abrir menú">☰</button>
+      <nav class="nav" id="navMenu">
+        <a href="#galeria">Galería</a>
+        <a href="https://t.me" target="_blank" rel="noreferrer">Bot</a>
+        <a href="https://app.netlify.com" target="_blank" rel="noreferrer">Netlify</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero container">
+        <h1 class="hero-title gradient-text">
+          Visuales <em>premium</em>, <span class="underline">animaciones suaves</span>.
+        </h1>
+        <p class="hero-sub">
+          Interfaz minimalista en paleta <strong>rosa</strong> y <strong>blanco</strong>, con tarjetas que se cargan desde <code>data.json</code>.
+        </p>
+        <button class="cta" id="ctaBtn" aria-label="Ver galería">
+          Explorar galería
+          <span class="cta-glow" aria-hidden="true"></span>
+        </button>
+        <div class="scroll-cue" aria-hidden="true">↓</div>
+      </section>
+
+      <!-- GALERÍA -->
+      <section id="galeria" class="gallery container" aria-live="polite">
+        <div class="gallery-status" id="galleryStatus">Cargando…</div>
+        <!-- Se inyecta .grid con cards via app.js -->
+      </section>
+    </main>
+
+    <footer class="site-footer container">
+      <small>© <span id="year"></span> sofy. UI/UX por Nexora.</small>
+    </footer>
+
+    <noscript>
+      <style>.gallery-status{display:block!important;color:#e91e63;font-weight:600}</style>
+      <div class="container" style="margin:1rem auto">
+        Para ver la galería necesitás habilitar JavaScript.
+      </div>
+    </noscript>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
