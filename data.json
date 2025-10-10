@@ -1,10 +1,25 @@
 [
   {
+    "id": 1760111008760,
+    "title": "Test Sofy",
+    "description": "prueba directa",
+    "image": "https://picsum.photos/seed/sofy-test/600/800",
+    "tags": [
+      "test",
+      "bot"
+    ],
+    "createdAt": "2025-10-10T15:43:28.760Z"
+  },
+  {
     "id": 1,
     "title": "Remera Oversize",
     "description": "Tela: Algodón premium · Talles: S, M, L, XL · Precio: $18999 ARS",
-    "image": "https://TU-URL-DE-IMAGEN", 
-    "tags": ["algodon", "remera", "negra"],
+    "image": "https://TU-URL-DE-IMAGEN",
+    "tags": [
+      "algodon",
+      "remera",
+      "negra"
+    ],
     "createdAt": "2025-01-01T00:00:00.000Z"
   }
 ]
