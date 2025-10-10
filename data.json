@@ -1,0 +1,58 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Remera Oversize",
+      "fabric": "Algodón premium",
+      "price": 18999,
+      "sizes": ["S", "M", "L", "XL"],
+      "imageUrl": "",
+      "imageDataUrl": ""
+    },
+    {
+      "id": 2,
+      "name": "Buzo Crop",
+      "fabric": "Frisa liviana",
+      "price": 25999,
+      "sizes": ["S", "M", "L"],
+      "imageUrl": "",
+      "imageDataUrl": ""
+    },
+    {
+      "id": 3,
+      "name": "Jogger Fit",
+      "fabric": "Algodón & Lycra",
+      "price": 22999,
+      "sizes": ["M", "L", "XL", "XXL"],
+      "imageUrl": "",
+      "imageDataUrl": ""
+    },
+    {
+      "id": 4,
+      "name": "Top Sport",
+      "fabric": "Microfibra",
+      "price": 14999,
+      "sizes": ["S", "M", "L"],
+      "imageUrl": "",
+      "imageDataUrl": ""
+    },
+    {
+      "id": 5,
+      "name": "Campera Bomber",
+      "fabric": "Twill",
+      "price": 49999,
+      "sizes": ["M", "L", "XL"],
+      "imageUrl": "",
+      "imageDataUrl": ""
+    },
+    {
+      "id": 6,
+      "name": "Short Classic",
+      "fabric": "Gabardina",
+      "price": 15999,
+      "sizes": ["S", "M", "L", "XL"],
+      "imageUrl": "",
+      "imageDataUrl": ""
+    }
+  ]
+}
