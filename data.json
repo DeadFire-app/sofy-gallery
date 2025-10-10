@@ -1,37 +1,10 @@
 [
   {
-    "id": 1760111272568,
-    "title": "Sofy Gabardina (XXXL)",
-    "description": "Tela: Gabardina · Talles: XXXL · Precio: $2000 ARS",
-    "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_0.jpg",
-    "tags": [
-      "gabardina",
-      "xxxl",
-      "auto"
-    ],
-    "createdAt": "2025-10-10T15:47:52.568Z"
-  },
-  {
-    "id": 1760111008760,
-    "title": "Test Sofy",
-    "description": "prueba directa",
-    "image": "https://picsum.photos/seed/sofy-test/600/800",
-    "tags": [
-      "test",
-      "bot"
-    ],
-    "createdAt": "2025-10-10T15:43:28.760Z"
-  },
-  {
     "id": 1,
     "title": "Remera Oversize",
     "description": "Tela: Algodón premium · Talles: S, M, L, XL · Precio: $18999 ARS",
-    "image": "https://TU-URL-DE-IMAGEN",
-    "tags": [
-      "algodon",
-      "remera",
-      "negra"
-    ],
+    "image": "https://TU-URL-DE-IMAGEN", 
+    "tags": ["algodon", "remera", "negra"],
     "createdAt": "2025-01-01T00:00:00.000Z"
   }
 ]
