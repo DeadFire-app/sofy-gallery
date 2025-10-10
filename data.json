@@ -1,5 +1,20 @@
 [
   {
+    "id": 1760137004646,
+    "title": "Joggins rustico",
+    "description": "Tela: Rústico · Talles: S, M, L, XL, XXL · Precio: $25000 ARS",
+    "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_7.jpg",
+    "tags": [
+      "rústico",
+      "s",
+      "m",
+      "l",
+      "xl",
+      "xxl"
+    ],
+    "createdAt": "2025-10-10T22:56:44.646Z"
+  },
+  {
     "id": 1760115153242,
     "title": "Short rustico kitty",
     "description": "Tela: Rústico · Talles: S, M, L, XL, XXL · Precio: $15000 ARS",
