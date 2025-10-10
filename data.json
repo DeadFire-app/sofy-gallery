@@ -13,17 +13,5 @@
       "xxl"
     ],
     "createdAt": "2025-10-10T16:52:33.242Z"
-  },
-  {
-    "id": 1,
-    "title": "Remera Oversize",
-    "description": "Tela: Algodón premium · Talles: S, M, L, XL · Precio: $18999 ARS",
-    "image": "https://TU-URL-DE-IMAGEN",
-    "tags": [
-      "algodon",
-      "remera",
-      "negra"
-    ],
-    "createdAt": "2025-01-01T00:00:00.000Z"
   }
 ]
