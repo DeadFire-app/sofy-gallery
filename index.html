@@ -9,46 +9,70 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <!-- Splash EXÓTICO (triple canvas + logo) -->
+  <!-- ====== Splash EXÓTICO Pro (triple canvas + layers extras) ====== -->
   <div id="splash" class="splash" aria-hidden="true">
+    <!-- tus tres canvases (pueden estar en blanco; los dejo para compatibilidad) -->
     <canvas id="c-bg" class="splash-canvas"></canvas>
     <canvas id="c-mid" class="splash-canvas"></canvas>
     <canvas id="c-fg" class="splash-canvas"></canvas>
 
+    <!-- Partículas livianas -->
+    <div class="s-particles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- Anillos y brillo -->
+    <div class="s-rings" aria-hidden="true">
+      <i class="r1"></i><i class="r2"></i><i class="r3"></i>
+    </div>
+
     <div class="splash-center">
       <h1 class="logo-word" aria-label="sofy">
-        <span>s</span><span>o</span><span>f</span><span>y</span>
+        <span class="ch s">s</span><span class="ch o">o</span><span class="ch f">f</span><span class="ch y">y</span>
       </h1>
       <div class="logo-sub">catálogo</div>
       <div class="logo-glow" aria-hidden="true"></div>
+
+      <!-- Barra de progreso real -->
+      <div class="progress">
+        <div id="s-progress" class="progress-bar"></div>
+      </div>
     </div>
+
+    <!-- Barrido de luz -->
+    <div class="s-shimmer" aria-hidden="true"></div>
   </div>
 
-  <!-- Fondo suave (después del splash) -->
+  <!-- Fondo animado (suave después del splash) -->
   <div class="bg-animated" aria-hidden="true"></div>
 
+  <!-- Encabezado / Menú -->
   <header class="container header">
     <h1 class="title">catálogo <span>sofy</span></h1>
     <div class="controls">
       <label class="search-wrap">
-        <input id="searchInput" type="search" placeholder="Buscar: algodon remera negra…" aria-label="Buscar productos" />
-        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16a6.471 6.471 0 0 0 4.23-1.57l.27.28v.79L20 21.5 21.5 20l-6-6zM4 9.5C4 6.46 6.46 4 9.5 4S15 6.46 15 9.5 12.54 15 9.5 15 4 12.54 4 9.5z"></path></svg>
+        <input id="searchInput" type="search" placeholder="Buscar: algodón remera negra…" aria-label="Buscar productos" />
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16a6.471 6.471 0 0 0 4.23-1.57l.27.28v.79L20 21.5 21.5 20l-6-6zM4 9.5C4 6.46 6.46 4 9.5 4S15 6.46 15 9.5 12.54 15 9.5 15 4 12.54 4 9.5z"></path>
+        </svg>
       </label>
       <span id="countInfo" class="count-info" aria-live="polite"></span>
     </div>
   </header>
 
+  <!-- Contenido principal -->
   <main class="container">
     <section id="gallery" class="grid" aria-live="polite"></section>
     <nav id="pagination" class="pagination" aria-label="Paginación"></nav>
   </main>
 
   <footer class="container footer">
-    <small>© <span id="year"></span> sofy — hecho a mano (no IA 😉).</small>
+    <small>© <span id="year"></span> Programado por Fabricio Agüero - Nexora 💫</small>
   </footer>
 
   <noscript>
-    <div class="container" style="margin:1rem auto;color:#e91e63">
+    <div class="container" style="margin:1rem auto;color:#ff5aa3">
       Necesitás habilitar JavaScript para ver el catálogo.
     </div>
   </noscript>
