@@ -1,30 +1,10 @@
 [
   {
-    "id": 1760113919160,
-    "title": "Sofy Rústico (S,M,L,XL,XXL)",
-    "description": "Tela: Rústico · Talles: S, M, L, XL, XXL · Precio: $15000 ARS",
-    "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_5.jpg",
-    "tags": [
-      "rústico",
-      "s",
-      "m",
-      "l",
-      "xl",
-      "xxl",
-      "auto"
-    ],
-    "createdAt": "2025-10-10T16:31:59.160Z"
-  },
-  {
     "id": 1,
     "title": "Remera Oversize",
     "description": "Tela: Algodón premium · Talles: S, M, L, XL · Precio: $18999 ARS",
-    "image": "https://TU-URL-DE-IMAGEN",
-    "tags": [
-      "algodon",
-      "remera",
-      "negra"
-    ],
+    "image": "https://TU-URL-DE-IMAGEN", 
+    "tags": ["algodon", "remera", "negra"],
     "createdAt": "2025-01-01T00:00:00.000Z"
   }
 ]
