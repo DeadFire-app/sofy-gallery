@@ -55,8 +55,8 @@ const FABRICS = [
   'hawaii',
   'CEY',
   'Jersey',
-  'sastrero con spandex'
-  'sastrero con lycra'
+  'sastrero con spandex',
+  'sastrero con lycra',
   'sastrero barbie',
   'cey lino',
   'lino morley con lycra',
@@ -65,7 +65,7 @@ const FABRICS = [
   'crochet con lycra',
   'tylor con lycra',
   'poplin',
-  'saten'
+  'saten',
   'saten sastrero',
   'crep sastrero',
   'morley lino',
