@@ -1,1 +1,22 @@
-[]
+{
+  "items": [
+    {
+      "id": 1760374943323,
+      "title": "Ejemplo",
+      "description": "Tela: Algodón · Talles: S · Precio: $20 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_8.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_8.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_9.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_10.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_11.jpg"
+      ],
+      "tags": [
+        "algodón",
+        "s"
+      ],
+      "price": 20,
+      "createdAt": "2025-10-13T17:02:23.323Z"
+    }
+  ]
+}
