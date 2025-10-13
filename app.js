@@ -236,41 +236,91 @@ function openCart(){
 function bindMenu(){
   $('#hamburger')?.addEventListener('click', ()=> $('#sideMenu').classList.add('open'));
   $('#closeMenu')?.addEventListener('click', ()=> $('#sideMenu').classList.remove('open'));
-  $('#menuContent').innerHTML = '';
+  const area = $('#menuContent');
+  area.innerHTML = '';
+
+  const contenido = {
+    bienvenida: `
+      <h3>🌷 ¡Bienvenida a Sofy mdn!</h3>
+      <p>Gracias por estar acá. Este catálogo está pensado para que puedas <b>vender fácil y rápido</b>:
+      descargá las fotos, copiá las descripciones y publicá en tus redes. Si sos revendedora nueva,
+      te recomendamos pedir una <b>seña del 50%</b> a tus clientas para trabajar sin inversión inicial 💖</p>
+    `,
+    quienes: `
+      <h3>💕 Quiénes somos</h3>
+      <p>Somos una empresa dedicada a la <b>venta mayorista y minorista</b> de indumentaria, calzado y accesorios,
+      con presencia en el mercado desde <b>agosto de 2016</b>.</p>
+      <p>Ubicados en <b>Zárate, Buenos Aires</b>, contamos con amplia experiencia en el rubro de la moda, ofreciendo
+      productos de excelente calidad y <b>fotos reales</b> que reflejan lo que nuestras clientas reciben.</p>
+      <p>Nuestro proyecto nació con una visión clara: <b>brindar oportunidades reales de crecimiento</b> a mujeres y
+      madres que buscan independencia económica y desean trabajar desde casa.</p>
+      <p>Creemos que el <b>emprendimiento transforma</b> y que cada mujer puede alcanzar sus metas con las herramientas
+      y el apoyo adecuados.</p>
+      <p>En Sofy mdn fomentamos una <b>comunidad</b> de revendedoras y emprendedoras comprometidas con la confianza,
+      la responsabilidad y el amor por lo que hacen 💖 Cada prenda, envío y mensaje reflejan nuestra dedicación por
+      construir una marca cercana, auténtica y con propósito 🌷</p>
+    `,
+    revendedora: `
+      <h3>👗 Cómo empezar a ser revendedora</h3>
+      <p>Empezar a vender con Sofy mdn es muy fácil ✨</p>
+      <ul>
+        <li>📸 Descargá las <b>fotos</b> y <b>descripciones</b> desde nuestra página.</li>
+        <li>💻 Copiá y publicá los productos en tus redes o tienda online.</li>
+        <li>💰 Agregá tu <b>ganancia</b> al precio publicado.</li>
+      </ul>
+      <p>Para trabajar <b>sin inversión inicial</b>, pedí una <b>seña del 50%</b> al cliente. Así asegurás el pedido y vendés con confianza 💖</p>
+      <p>Podés emprender desde tu casa, a tu ritmo, con el respaldo de nuestra marca.</p>
+    `,
+    faq: `
+      <h3>🎀 Preguntas frecuentes</h3>
+      <p><b>📅 ¿Cuándo cierran los pedidos y cuándo llegan?</b><br>
+      Los pedidos cierran los <b>domingos</b> y se entregan los <b>miércoles</b>, para que organices tus ventas con anticipación ✨</p>
+
+      <p><b>🛒 ¿Cómo realizo un pedido?</b><br>
+      1️⃣ Agregá los productos al carrito.<br>
+      2️⃣ Aboná el <b>50%</b> del total (seña).<br>
+      3️⃣ Enviá el comprobante por WhatsApp.</p>
+
+      <p><b>🎨 ¿Puedo elegir el color de los productos?</b><br>
+      Sí, se puede agregar color opcional según disponibilidad 💖</p>
+
+      <p><b>🔄 ¿Se pueden cambiar los productos?</b><br>
+      No tienen cambio (talles exactos). Solo por <b>falla</b>, dentro de los <b>3 días</b> posteriores a la entrega.
+      Las prendas <b>blancas no tienen cambio</b> bajo ninguna circunstancia 🌸</p>
+
+      <p><b>🚚 ¿Hacen envíos?</b><br>
+      Contamos con servicio de <b>mensajería en Zárate</b>, con costo según zona.</p>
+
+      <p><b>📦 ¿Cuál es la compra mínima?</b><br>
+      <b>12 artículos</b> (surtidos o iguales). Aplica a calzado e indumentaria.</p>
+
+      <p><b>⏰ ¿Cuándo se reciben comprobantes y consultas?</b><br>
+      <b>Lunes a viernes:</b> 9 a 18h<br>
+      <b>Sábados y domingos:</b> 11 a 15h 💅</p>
+
+      <p><b>💡 Tip para revendedoras:</b> Vendé desde casa sin inversión, con productos de calidad y el respaldo de nuestra marca.</p>
+    `,
+    soporte: `
+      <h3>👛 Soporte y contacto</h3>
+      <p>Estamos siempre para vos 💖 Si tenés dudas o necesitás ayuda con tu pedido, te acompañamos para que tu experiencia sea fácil y segura ✨</p>
+      <p><b>Horarios de atención:</b><br>
+      Lunes a viernes: 9 a 18h<br>
+      Sábados y domingos: 11 a 15h</p>
+      <p><b>Tip:</b> Para agilizar la respuesta, enviá tu nombre, número de pedido (si aplica) y consulta específica.</p>
+      <p>Canales habilitados: próximamente publicaremos los datos de contacto.</p>
+    `,
+    unite: `
+      <h3>✨ Unite, vendé, crecé</h3>
+      <p>¡Este es tu momento de brillar! 💖</p>
+      <p><b>💞 Unite:</b> Sumate a nuestra comunidad de revendedoras y accedé a productos exclusivos y precios especiales.</p>
+      <p><b>🛍️ Vendé:</b> Compartí nuestros artículos de calidad en tus redes, sin inversión inicial.</p>
+      <p><b>🌷 Crecé:</b> Generá ingresos, aprendé sobre ventas y emprendimiento, y formá parte de una red de mujeres que se apoyan e inspiran ✨</p>
+      <p><b>Tip:</b> No hace falta experiencia previa. Solo ganas de emprender y brillar 💅</p>
+    `
+  };
+
   $$('.menu-link').forEach(b=> b.addEventListener('click', ()=>{
     const sec = b.dataset.section;
-    const area = $('#menuContent');
-    if (sec==='contacto' || sec==='soporte') { window.location.href = "https://wa.me/5493487231547"; return; }
-    if (sec==='pagos'){
-      area.innerHTML = `
-        <h3>Cómo pagar</h3>
-        <p>Agregá productos al carrito y aboná una <b>seña del 50%</b> del total. Luego enviá el comprobante por WhatsApp para confirmar tu pedido.</p>
-      `;
-    } else if (sec==='revendedora'){
-      area.innerHTML = `
-        <h3>¿Querés ser revendedora?</h3>
-        <p>Empezar a vender con Sofy mdn es muy fácil ✨
-
-📸 Descargá las fotos y descripciones desde nuestra página.
-💻 Copiá y publicá los productos en tus redes o tienda online.
-💰 Agregá tu ganancia al precio publicado.
-
-Para trabajar sin inversión inicial, te recomendamos solicitar una seña del 50% al cliente.
-Así asegurás el pedido y vendés con total confianza 💖
-
-Con este método podés comenzar a emprender desde tu casa, a tu ritmo y con el respaldo de una marca que te acompaña</p>
-      `;
-    } else if (sec==='info'){
-      area.innerHTML = `
-        <h3>Información</h3>
-        <p>Este es un <b>catálogo virtual</b> para compra y gestión de stock. Las imágenes pueden variar según disponibilidad de color/talle.</p>
-      `;
-    }
+    area.innerHTML = contenido[sec] || '';
   }));
-}
-
-/* ===== Fix de viewport móvil (barra de direcciones) ===== */
-function setRealVh(){
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
