@@ -1,1 +1,21 @@
-[]
+{
+  "items": [
+    {
+      "id": 1760385974490,
+      "title": "Ejemplo",
+      "description": "Tela: Modal · Talles: XL · Precio: $20 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_12.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_12.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_13.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_14.jpg"
+      ],
+      "tags": [
+        "modal",
+        "xl"
+      ],
+      "price": 20,
+      "createdAt": "2025-10-13T20:06:14.490Z"
+    }
+  ]
+}
