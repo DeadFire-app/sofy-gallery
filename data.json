@@ -1,1 +1,19 @@
-[]
+{
+  "items": [
+    {
+      "id": 1760390252429,
+      "title": "Ja",
+      "description": "Tela: Algodon rustico · Talles: 11 · Precio: $8 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_17.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_17.jpg"
+      ],
+      "tags": [
+        "algodon rustico",
+        "11"
+      ],
+      "price": 8,
+      "createdAt": "2025-10-13T21:17:32.429Z"
+    }
+  ]
+}
