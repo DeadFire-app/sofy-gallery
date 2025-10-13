@@ -21,13 +21,41 @@ const TG_API = `https://api.telegram.org/bot${BOT_TOKEN}`;
 const TG_FILE = `https://api.telegram.org/file/bot${BOT_TOKEN}`;
 
 const FABRICS = [
-  'algodón', 'algodón peinado', 'lino', 'lino viscosa', 'morley', 'micromorley',
-  'rústico', 'frisa', 'modal', 'viscosa', 'crepe', 'crep', 'wafle', 'fibrana',
-  'gabardina', 'jean', 'bengalina', 'spandex', 'engomado', 'ecocuero', 'tull',
-  'broderie', 'bremer', 'lycra', 'saten', 'poliéster', 'rayón'
+  // base
+  'algodón',
+  'algodón peinado',
+  'lino',
+  'lino viscosa',
+  'viscosa',
+  'modal',
+  'frisa',
+  'rústico',
+  'morley',
+  'micromorley',
+  'wafle',
+  'fibrana',
+  'crepe',
+  'crep',            
+  'tull',
+  'broderie',
+  'bremer',
+  'lycra',
+  'spandex',
+  'gabardina',
+  'bengalina',
+  'jean',
+  'engomado',
+  'ecocuero',
+  'satén',
+  'saten',          
+  'poliéster',
+  'poliester',      
+  'rayón',
+  'rayon',          
+  'hawaii'          
 ];
 
-const SIZES = ['XXS','XS','S','M','L','XL','XXL','3XL','4XL','T1','T2','T3','Único'];
+const SIZES = ['1 ( S )', '2 ( M )', '3 ( L )', '4 ( XL )', '5 ( XXL )', '6 ( XXXL )', '7', '8', '9', '10', '11', '12'];
 
 const SESSIONS = new Map(); // { key(chatId): { step, data, albumId, images, messageIds, lastTs } }
 // Nota: en serverless puede reiniciarse; funciona bien en flujos cortos.
