@@ -1,275 +1,391 @@
 // netlify/functions/tgWebhook.js
-// Sofy Bot — versión final robusta (Node 18+, fetch nativo)
+// Bot Telegram (webhook). Soporta:
+// - /start: saludo
+// - /reset: diagnóstico y reporte a ADMIN_CHAT_ID
+// - Álbumes (media_group_id) → pregunta si es la misma prenda; si sí, wizard (nombre, tela, talles, precio) y sube un producto con múltiples fotos.
+// - Foto individual → wizard normal.
+// - Confirmación: “✅ Subido … [ID: 123]”. Para borrar: responder ese mensaje con /eliminar.
+// - /eliminar como reply: borra el producto en GitHub.
 //
-// Requisitos de ENV en Netlify (Site settings → Environment variables):
-// BOT_TOKEN, API_KEY, ADD_URL, DELETE_URL
-//  (si addProduct escribe en GitHub: GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO, DATA_PATH, GITHUB_BRANCH)
-//
-// Características:
-// - /start -> saludo
-// - FOTO -> pide NOMBRE -> Tela (inline) -> Talles (multi inline) -> Precio (texto) -> POST a ADD_URL
-// - /eliminar usado como respuesta a TU foto -> POST a DELETE_URL con { image }
-// - Nunca devuelve 400 a Telegram (siempre 200 OK) para evitar errores de webhook.
-// - Manejo de errores con console.error para verlos en Netlify → Functions → tgWebhook → Logs
+// Requiere env: BOT_TOKEN, ADD_URL, DELETE_URL, API_KEY, ADMIN_CHAT_ID
 
-const TELEGRAM_API = `https://api.telegram.org/bot${process.env.BOT_TOKEN}`;
-const TELEGRAM_FILE = `https://api.telegram.org/file/bot${process.env.BOT_TOKEN}`;
-
-const ADD_URL    = process.env.ADD_URL;
+const BOT_TOKEN = process.env.BOT_TOKEN;
+const ADD_URL = process.env.ADD_URL;
 const DELETE_URL = process.env.DELETE_URL;
-const API_KEY    = process.env.API_KEY;
+const API_KEY = process.env.API_KEY;
+const ADMIN = process.env.ADMIN_CHAT_ID;
 
-// Telas (extendidas)
+if (!BOT_TOKEN) console.warn('[tgWebhook] Falta BOT_TOKEN');
+
+const TG_API = `https://api.telegram.org/bot${BOT_TOKEN}`;
+const TG_FILE = `https://api.telegram.org/file/bot${BOT_TOKEN}`;
+
 const FABRICS = [
-  "Algodón","Algodón peinado","Lino","Viscosa","Modal","Rayón","Acetato","Oxford","Poplina","Muselina","Voile",
-  "Fibrana","Rústico","Broderie","Lycra","Spandex","Morley","Micromorley","Jersey","Elastano","Wafle",
-  "Microfibra","Dry-fit","Técnica","Supplex","Acrílico","Friza","Polar","Pañolén","Lana","Bremer",
-  "Satinado","Crepé","Velvet (terciopelo)","Chiffón","Organza","Encaje","Tull","Hawaii",
-  "Gabardina","Bengalina","Jean / Denim","Twill","Canvas","Ecocuero","Cuero ecológico","Engomado"
+  'algodón', 'algodón peinado', 'lino', 'lino viscosa', 'morley', 'micromorley',
+  'rústico', 'frisa', 'modal', 'viscosa', 'crepe', 'crep', 'wafle', 'fibrana',
+  'gabardina', 'jean', 'bengalina', 'spandex', 'engomado', 'ecocuero', 'tull',
+  'broderie', 'bremer', 'lycra', 'saten', 'poliéster', 'rayón'
 ];
-// Talles
-const SIZES = ["XS","S","M","L","XL","XXL","XXXL","Único"];
 
-// Memoria simple en RAM (se resetea con cada redeploy/idle)
-const sessions = new Map();
+const SIZES = ['XXS','XS','S','M','L','XL','XXL','3XL','4XL','T1','T2','T3','Único'];
 
-// ===== Helpers de respuesta HTTP =====
-const ok = (body={ ok:true }) => ({ statusCode: 200, headers:{ "Content-Type":"application/json" }, body: JSON.stringify(body) });
+const SESSIONS = new Map(); // { key(chatId): { step, data, albumId, images, messageIds, lastTs } }
+// Nota: en serverless puede reiniciarse; funciona bien en flujos cortos.
 
-// ===== Helpers Telegram =====
+function session(chatId) {
+  let s = SESSIONS.get(chatId);
+  if (!s) { s = { step:null, data:{}, albumId:null, images:[], selectedSizes:new Set(), messageIds:[] }; SESSIONS.set(chatId, s); }
+  return s;
+}
+
 async function tg(method, payload) {
-  try {
-    const res = await fetch(`${TELEGRAM_API}/${method}`, {
-      method: "POST",
-      headers: { "Content-Type":"application/json" },
-      body: JSON.stringify(payload)
-    });
-    return await res.json();
-  } catch (e) {
-    console.error(`[tg ${method}]`, e);
-    return { ok:false };
-  }
+  const res = await fetch(`${TG_API}/${method}`, {
+    method: 'POST',
+    headers: { 'Content-Type':'application/json' },
+    body: JSON.stringify(payload)
+  });
+  const json = await res.json().catch(()=> ({}));
+  if (!json.ok) throw new Error(`TG ${method} error: ${res.status} ${JSON.stringify(json)}`);
+  return json;
 }
-const sendMessage = (chat_id, text, extra={}) => tg("sendMessage", { chat_id, text, ...extra });
-const answerCb    = (callback_query_id, text="") => tg("answerCallbackQuery", { callback_query_id, text });
-const editText    = (chat_id, message_id, text, extra={}) => tg("editMessageText", { chat_id, message_id, text, ...extra });
-const editMarkup  = (chat_id, message_id, reply_markup) => tg("editMessageReplyMarkup", { chat_id, message_id, reply_markup });
 
-async function getFileUrl(file_id){
+async function getFileUrl(file_id) {
+  const file = await tg('getFile', { file_id });
+  const path = file.result && file.result.file_path;
+  if (!path) throw new Error('No file_path');
+  return `${TG_FILE}/${path}`;
+}
+
+function fabricKeyboard(page=0) {
+  const perRow = 2;
+  const perPage = 12; // 6 filas * 2
+  const start = page*perPage;
+  const slice = FABRICS.slice(start, start+perPage);
+  const rows = [];
+  for (let i=0;i<slice.length;i+=perRow){
+    rows.push(slice.slice(i,i+perRow).map(f => ({ text:f, callback_data:`fab|${f}` })));
+  }
+  const nav = [];
+  if (start>0) nav.push({ text:'«', callback_data:`fabpage|${page-1}` });
+  if (start+perPage<FABRICS.length) nav.push({ text:'»', callback_data:`fabpage|${page+1}` });
+  if (nav.length) rows.push(nav);
+  return { inline_keyboard: rows };
+}
+
+function sizesKeyboard(selected=new Set()) {
+  const perRow = 4;
+  const rows = [];
+  for (let i=0;i<SIZES.length;i+=perRow){
+    const row = SIZES.slice(i,i+perRow).map(sz => ({
+      text: selected.has(sz) ? `✅ ${sz}` : sz,
+      callback_data: `size|${sz}`
+    }));
+    rows.push(row);
+  }
+  rows.push([{ text:'Continuar ▶', callback_data:'sizes_done' }]);
+  return { inline_keyboard: rows };
+}
+
+function yesNoKeyboard(key) {
+  return { inline_keyboard: [
+    [{ text:'Sí', callback_data:`yes|${key}` }, { text:'No', callback_data:`no|${key}` }]
+  ]};
+}
+
+async function addProductToSite(product) {
+  const res = await fetch(ADD_URL, {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json', 'x-api-key': API_KEY },
+    body: JSON.stringify(product)
+  });
+  const json = await res.json().catch(()=> ({}));
+  if (!res.ok || !json.ok) {
+    throw new Error(json && json.error ? json.error : `HTTP ${res.status}`);
+  }
+  return json.id;
+}
+
+async function deleteProductFromSite(id) {
+  const res = await fetch(DELETE_URL, {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json', 'x-api-key': API_KEY },
+    body: JSON.stringify({ id, hard:false })
+  });
+  const json = await res.json().catch(()=> ({}));
+  if (!res.ok || !json.ok) {
+    throw new Error(json && json.error ? json.error : `HTTP ${res.status}`);
+  }
+  return true;
+}
+
+async function sendAdmin(msg) {
+  if (!ADMIN) return;
+  try { await tg('sendMessage', { chat_id: ADMIN, text: `⚠️ ${msg}`, parse_mode:'HTML' }); } catch {}
+}
+
+function productDescription({ fabric, sizes, price }) {
+  const talla = Array.from(sizes||[]).join(', ');
+  const ftxt = fabric ? (fabric[0].toUpperCase()+fabric.slice(1)) : '—';
+  const p = (Number(price)||0).toLocaleString('es-AR');
+  return `Tela: ${ftxt} · Talles: ${talla||'—'} · Precio: $${p} ARS`;
+}
+
+function productTags({ fabric, sizes }) {
+  const s = Array.from(sizes||[]);
+  return [
+    ...(fabric ? [fabric.toLowerCase()] : []),
+    ...s.map(x=>x.toLowerCase())
+  ];
+}
+
+// --------- Handlers de flujos ---------
+
+async function handleStart(chatId) {
+  await tg('sendMessage', {
+    chat_id: chatId,
+    text: 'Hola 👋 Soy el bot de catálogo Sofy. Enviame una foto (o un álbum) y te ayudo a cargarla.\n\nConsejo: si subís varias fotos de la misma prenda, mandalas como álbum para hacer un único producto con carrusel.',
+  });
+}
+
+async function handleReset(chatId) {
+  // Diagnóstico básico
+  const checks = [];
+  function ok(b, label){ checks.push(`${b?'✅':'❌'} ${label}`); return b; }
+
+  const has = {
+    BOT_TOKEN: !!BOT_TOKEN, ADD_URL: !!ADD_URL, DELETE_URL: !!DELETE_URL, API_KEY: !!API_KEY
+  };
+  ok(has.BOT_TOKEN, 'BOT_TOKEN');
+  ok(has.ADD_URL, 'ADD_URL');
+  ok(has.DELETE_URL, 'DELETE_URL');
+  ok(has.API_KEY, 'API_KEY');
+
+  // Ping ADD
+  let addOk=false, delOk=false;
   try{
-    const r = await fetch(`${TELEGRAM_API}/getFile?file_id=${file_id}`);
-    const j = await r.json();
-    if (j.ok && j.result?.file_path) return `${TELEGRAM_FILE}/${j.result.file_path}`;
-  }catch(e){ console.error("[getFileUrl]", e); }
-  return "";
-}
+    const r = await fetch(ADD_URL, { method:'POST', headers:{'x-api-key':API_KEY,'Content-Type':'application/json'}, body:'{}'});
+    addOk = r.status !== 503; // debe rechazar por validación, pero que responda
+  }catch{}
+  ok(addOk, 'Función addProduct responde');
 
-// ===== Keyboards =====
-function fabricKeyboard(){
-  // 3 columnas por fila
-  const rows = [];
-  for (let i=0;i<FABRICS.length;i+=3){
-    rows.push(FABRICS.slice(i,i+3).map(label => ({ text: label, callback_data: `FAB:${label}` })));
+  try{
+    const r = await fetch(DELETE_URL, { method:'POST', headers:{'x-api-key':API_KEY,'Content-Type':'application/json'}, body:'{}'});
+    delOk = r.status !== 503;
+  }catch{}
+  ok(delOk, 'Función deleteProduct responde');
+
+  const txt = `🔧 RESET / DIAGNÓSTICO\n${checks.join('\n')}`;
+  await tg('sendMessage', { chat_id: chatId, text: txt });
+  if (!(has.BOT_TOKEN && has.ADD_URL && has.DELETE_URL && has.API_KEY)) {
+    await sendAdmin(`RESET detectó variables faltantes. ${JSON.stringify(has)}`);
   }
-  return { inline_keyboard: rows };
 }
-function sizesKeyboard(selected = []){
-  const S = new Set(selected);
-  const rows = [];
-  for (let i=0;i<SIZES.length;i+=4){
-    rows.push(SIZES.slice(i,i+4).map(sz => ({
-      text: `${S.has(sz) ? "✅ " : ""}${sz}`,
-      callback_data: `SIZE:${sz}`
-    })));
+
+// Foto (o álbum). En Telegram, los álbumes llegan con mismo media_group_id.
+async function handlePhoto(msg) {
+  const chatId = msg.chat.id;
+  const s = session(chatId);
+
+  // archivo más grande
+  const ph = (msg.photo||[]).slice(-1)[0];
+  if (!ph) return;
+
+  const url = await getFileUrl(ph.file_id);
+  const mgid = msg.media_group_id || null;
+
+  if (mgid) {
+    // agrupar álbum
+    if (!s.albumId || s.albumId !== mgid) {
+      s.albumId = mgid;
+      s.images = [];
+      s.selectedSizes = new Set();
+      s.data = {};
+      s.step = 'album_confirm';
+      await tg('sendMessage', {
+        chat_id: chatId,
+        text: '📸 Detecté un álbum.\n¿Todas las fotos son de la misma prenda?',
+        reply_markup: yesNoKeyboard('same_item')
+      });
+    }
+    s.images.push(url);
+  } else {
+    // foto suelta: inicializa wizard para 1 imagen
+    s.albumId = null;
+    s.images = [url];
+    s.selectedSizes = new Set();
+    s.data = {};
+    s.step = 'ask_title';
+    await tg('sendMessage', { chat_id: chatId, text: '📝 Decime el <b>nombre de la prenda</b>.', parse_mode:'HTML' });
   }
-  rows.push([{ text:"❌ Cancelar", callback_data:"CANCEL" }, { text:"✅ Continuar", callback_data:"NEXT" }]);
-  return { inline_keyboard: rows };
 }
 
-// ===== Parsers =====
-function parsePrice(raw=""){
-  const s = String(raw).replace(/[^\d.,]/g,"").replace(/\./g,"").replace(",",".");
-  const n = parseFloat(s);
-  return isNaN(n) ? null : Math.round(n*100)/100;
-}
-
-// ===== Handler principal =====
-exports.handler = async (event) => {
-  // Telegram debería usar POST, pero si envía otra cosa… nunca 400.
-  if (event.httpMethod !== "POST") return ok({ note:"non-POST ignored" });
-
-  let update = {};
-  try { update = JSON.parse(event.body || "{}"); }
-  catch (e) { console.error("[JSON parse]", e, "body:", event.body); return ok({ note:"bad json ignored" }); }
-
+async function handleCallback(query) {
+  const chatId = query.message.chat.id;
+  const s = session(chatId);
+  const data = query.data || '';
   try {
-    // ---- CALLBACK QUERY (botones inline) ----
-    if (update.callback_query) {
-      const cq = update.callback_query;
-      const chatId = cq.message?.chat?.id;
-      const msgId  = cq.message?.message_id;
-      const data   = cq.data || "";
-      const sess   = sessions.get(chatId) || {};
-
-      // Siempre contestar callback para quitar spinner
-      try { await answerCb(cq.id); } catch {}
-
-      if (!chatId || !msgId) return ok();
-
-      // Tela seleccionada
-      if (data.startsWith("FAB:")){
-        const fabric = data.slice(4);
-        if (!FABRICS.includes(fabric)) return ok();
-        sess.fabric = fabric;
-        sess.step   = "SIZES";
-        sessions.set(chatId, sess);
-        await editText(chatId, msgId, `🧵 Tela: *${fabric}*\nAhora elegí los talles (podés varias)`, { parse_mode:"Markdown" });
-        await editMarkup(chatId, msgId, sizesKeyboard(sess.sizes || []));
-        return ok();
-      }
-
-      // Toggle de talles
-      if (data.startsWith("SIZE:")){
-        const sz = data.slice(5);
-        if (!SIZES.includes(sz)) return ok();
-        const set = new Set(sess.sizes || []);
-        set.has(sz) ? set.delete(sz) : set.add(sz);
-        sess.sizes = Array.from(set);
-        sessions.set(chatId, sess);
-        await editMarkup(chatId, msgId, sizesKeyboard(sess.sizes));
-        return ok();
-      }
-
-      // Continuar a precio
-      if (data === "NEXT"){
-        if (!sess.fabric) { await answerCb(cq.id, "Elegí una tela primero"); return ok(); }
-        if (!sess.sizes || sess.sizes.length===0) { await answerCb(cq.id, "Seleccioná al menos un talle"); return ok(); }
-        sess.step = "PRICE";
-        sessions.set(chatId, sess);
-        await editText(chatId, msgId,
-          `✅ *Nombre:* ${sess.title || "-"}\n✅ *Tela:* ${sess.fabric}\n✅ *Talles:* ${sess.sizes.join(", ")}\n\nEscribí el *precio* en ARS (solo número, ej: 25999)`,
-          { parse_mode:"Markdown" }
-        );
-        await editMarkup(chatId, msgId, { inline_keyboard: [] });
-        return ok();
-      }
-
-      // Cancelar
-      if (data === "CANCEL"){
-        sessions.delete(chatId);
-        await editText(chatId, msgId, "Operación cancelada, Mar. 💫");
-        await editMarkup(chatId, msgId, { inline_keyboard: [] });
-        return ok();
-      }
-
-      return ok();
+    if (data.startsWith('fabpage|')) {
+      const page = Number(data.split('|')[1]||'0')||0;
+      await tg('editMessageReplyMarkup', {
+        chat_id: chatId, message_id: query.message.message_id,
+        reply_markup: fabricKeyboard(page)
+      });
+      return;
     }
-
-    // ---- MENSAJES ----
-    const msg = update.message || update.edited_message;
-    if (!msg) return ok({ note:"no message" });
-    const chatId = msg.chat?.id;
-
-    // /start
-    if (msg.text && msg.text.trim().startsWith("/start")){
-      await sendMessage(chatId,
-        "Hola Mar 👋\nMandame una *foto* para cargar un producto.\n" +
-        "Flujo: *Nombre* → *Tela* → *Talles* → *Precio* → Subir ✅\n" +
-        "Para borrar: respondé a tu *propia* foto con /eliminar.",
-        { parse_mode:"Markdown" }
-      );
-      return ok();
+    if (data.startsWith('fab|')) {
+      const fab = data.split('|')[1];
+      s.data.fabric = fab;
+      s.step = 'sizes';
+      await tg('editMessageText', { chat_id: chatId, message_id: query.message.message_id, text:`Tela seleccionada: <b>${fab}</b>`, parse_mode:'HTML' });
+      await tg('sendMessage', { chat_id: chatId, text:'Elegí los <b>talles</b> (podés marcar varios) y tocá "Continuar ▶".', parse_mode:'HTML', reply_markup: sizesKeyboard(s.selectedSizes) });
+      return;
     }
-
-    // /eliminar (debe ser reply a TU foto)
-    if (msg.text && msg.text.trim().split(/\s+/)[0].toLowerCase() === "/eliminar"){
-      const replied = msg.reply_to_message;
-      if (!replied) { await sendMessage(chatId,"Usá /eliminar *respondiendo a tu foto*.",{ parse_mode:"Markdown" }); return ok(); }
-      if (!replied.photo) { await sendMessage(chatId,"Ese mensaje no tiene foto, Mar."); return ok(); }
-      if ((replied.from?.id) !== msg.from?.id) { await sendMessage(chatId,"Tiene que ser tu *propio* mensaje con la foto, Mar.",{ parse_mode:"Markdown" }); return ok(); }
-
-      try {
-        const largest = replied.photo.reduce((a,b)=> (a.file_size||0)>(b.file_size||0)?a:b);
-        const imageUrl = await getFileUrl(largest.file_id);
-        if (!imageUrl){ await sendMessage(chatId,"No pude obtener la imagen, Mar."); return ok(); }
-
-        const delRes = await fetch(DELETE_URL, {
-          method: "POST",
-          headers: { "Content-Type":"application/json", "x-api-key": API_KEY },
-          body: JSON.stringify({ image: imageUrl })
-        }).then(r=>r.json()).catch(e=>({ ok:false, error:String(e) }));
-
-        if (delRes?.ok && delRes.removedCount > 0) await sendMessage(chatId, `🗑️ Listo, Mar. Eliminé ${delRes.removedCount} elemento(s).`);
-        else await sendMessage(chatId, "No encontré esa imagen en el catálogo, Mar.");
-
-      } catch (e) {
-        console.error("[/eliminar]", e);
-        await sendMessage(chatId,"Error al eliminar en el servidor.");
-      }
-      return ok();
+    if (data.startsWith('size|')) {
+      const sz = data.split('|')[1];
+      if (s.selectedSizes.has(sz)) s.selectedSizes.delete(sz); else s.selectedSizes.add(sz);
+      await tg('editMessageReplyMarkup', { chat_id: chatId, message_id: query.message.message_id, reply_markup: sizesKeyboard(s.selectedSizes) });
+      return;
     }
-
-    // FOTO: iniciar flujo
-    if (msg.photo){
-      try{
-        const largest = msg.photo.reduce((a,b)=> (a.file_size||0)>(b.file_size||0)?a:b);
-        const imageUrl = await getFileUrl(largest.file_id);
-        sessions.set(chatId, { step:"NAME", imageUrl, sizes:[] });
-        await sendMessage(chatId, "📛 ¿Nombre de la prenda?", { reply_markup:{ force_reply:true } });
-      }catch(e){
-        console.error("[photo]", e);
-        await sendMessage(chatId,"No pude obtener la imagen, Mar.");
-      }
-      return ok();
+    if (data === 'sizes_done') {
+      s.data.sizes = new Set(Array.from(s.selectedSizes));
+      s.step = 'price';
+      await tg('sendMessage', { chat_id: chatId, text: '💵 Ingresá el <b>precio</b> en ARS (solo números).', parse_mode:'HTML' });
+      return;
     }
-
-    // Respuestas (nombre / precio)
-    const sess = sessions.get(chatId);
-    if (sess) {
-      // Nombre
-      if (sess.step === "NAME" && msg.text){
-        sess.title = msg.text.trim().slice(0,80);
-        sess.step  = "FABRIC";
-        sessions.set(chatId, sess);
-        await sendMessage(chatId, "🧵 Elegí la tela:", { reply_markup: fabricKeyboard(), parse_mode:"Markdown" });
-        return ok();
-      }
-      // Precio
-      if (sess.step === "PRICE" && msg.text){
-        const price = parsePrice(msg.text);
-        if (price == null){ await sendMessage(chatId,"Precio inválido. Escribí solo el número (ej: 25999)."); return ok(); }
-
-        const title = sess.title || `Sofy ${sess.fabric} (${(sess.sizes||[]).join(",")})`;
-        const description = `Tela: ${sess.fabric} · Talles: ${sess.sizes.join(", ")} · Precio: $${price} ARS`;
-        const tags = [String(sess.fabric||"").toLowerCase(), ...(sess.sizes||[]).map(s=>s.toLowerCase())];
-
-        try {
-          const addRes = await fetch(ADD_URL, {
-            method: "POST",
-            headers: { "Content-Type":"application/json", "x-api-key": API_KEY },
-            body: JSON.stringify({ title, description, image: sess.imageUrl, tags })
-          }).then(r=>r.json()).catch(e=>({ ok:false, error:String(e) }));
-
-          if (addRes?.ok) await sendMessage(chatId,"✅ Subido, Mar.");
-          else {
-            console.error("[addProduct]", addRes);
-            await sendMessage(chatId,"❌ Hubo un error del servidor al subir, Mar.");
+    if (data.startsWith('yes|') || data.startsWith('no|')) {
+      const key = data.split('|')[1];
+      if (key === 'same_item') {
+        if (data.startsWith('yes|')) {
+          // álbum como un producto
+          s.step = 'ask_title';
+          await tg('sendMessage', { chat_id: chatId, text: '📝 Decime el <b>nombre de la prenda</b>.', parse_mode:'HTML' });
+        } else {
+          // tratar cada imagen como producto individual
+          const imgs = [...s.images];
+          s.images = []; s.albumId = null;
+          for (const u of imgs) {
+            const temp = session(chatId);
+            temp.images = [u];
+            temp.selectedSizes = new Set();
+            temp.data = {};
+            temp.step = 'ask_title';
+            await tg('sendMessage', { chat_id: chatId, text: '📝 (Foto individual) nombre de la prenda:', parse_mode:'HTML' });
           }
-        } catch (e) {
-          console.error("[PRICE -> add]", e);
-          await sendMessage(chatId,"❌ Error de red al subir.");
         }
-        sessions.delete(chatId);
-        return ok();
       }
+      // ocultar teclado
+      await tg('editMessageReplyMarkup', { chat_id: chatId, message_id: query.message.message_id, reply_markup: { inline_keyboard: [] } });
+      return;
+    }
+  } catch (err) {
+    await sendAdmin(`callback error: ${err.message}`);
+  } finally {
+    // responder callback para evitar "loading..."
+    try{ await tg('answerCallbackQuery', { callback_query_id: query.id }); } catch {}
+  }
+}
+
+async function handleText(msg) {
+  const chatId = msg.chat.id;
+  const text = (msg.text||'').trim();
+  const s = session(chatId);
+
+  // /start
+  if (text === '/start') return handleStart(chatId);
+
+  // /reset
+  if (text === '/reset') return handleReset(chatId);
+
+  // /eliminar como reply
+  if (text.startsWith('/eliminar')) {
+    const ref = msg.reply_to_message && msg.reply_to_message.text;
+    const m = ref && ref.match(/\[ID:\s*(\d+)\]/);
+    if (!m) {
+      await tg('sendMessage', { chat_id: chatId, text: 'Para eliminar, respondé al mensaje de confirmación “✅ Subido … [ID: …]” con /eliminar.' });
+      return;
+    }
+    const id = m[1];
+    try{
+      await deleteProductFromSite(id);
+      await tg('sendMessage', { chat_id: chatId, text: `🗑️ Eliminado correctamente (ID: ${id}).` });
+    }catch(err){
+      await tg('sendMessage', { chat_id: chatId, text: `❌ Error eliminando: ${err.message}` });
+      await sendAdmin(`DELETE fail id=${id}: ${err.message}`);
+    }
+    return;
+  }
+
+  // Wizard
+  if (s.step === 'ask_title') {
+    s.data.title = text;
+    s.step = 'fabric';
+    await tg('sendMessage', { chat_id: chatId, text: 'Elige la <b>tela</b>:', parse_mode:'HTML', reply_markup: fabricKeyboard(0) });
+    return;
+  }
+  if (s.step === 'price') {
+    const price = Number(text.replace(/[^\d]/g,'')||0);
+    if (!price) {
+      await tg('sendMessage', { chat_id: chatId, text: 'Ingresá un número válido para el precio.' });
+      return;
+    }
+    s.data.price = price;
+
+    // construir descripción/tags
+    const desc = productDescription({ fabric:s.data.fabric, sizes:s.data.sizes, price: s.data.price });
+    const tags = productTags({ fabric:s.data.fabric, sizes:s.data.sizes });
+
+    // levantar imágenes (álbum o simple)
+    const images = s.images && s.images.length ? s.images : [];
+    try{
+      const id = await addProductToSite({
+        title: s.data.title,
+        description: desc,
+        images,
+        tags,
+        price
+      });
+      const conf = `✅ Subido\n${s.data.title}\n${desc}\n\n[ID: ${id}]\n\nPara eliminar, respondé este mensaje con /eliminar`;
+      await tg('sendMessage', { chat_id: chatId, text: conf });
+
+      // limpiar sesión
+      s.step = null; s.data = {}; s.images = []; s.albumId = null; s.selectedSizes = new Set();
+    }catch(err){
+      await tg('sendMessage', { chat_id: chatId, text: `❌ Error subiendo: ${err.message}` });
+      await sendAdmin(`ADD fail: ${err.message}`);
+    }
+    return;
+  }
+
+  // Si no hay estado y es texto suelto
+  await tg('sendMessage', { chat_id: chatId, text: 'Enviá una foto o un álbum para comenzar. /start' });
+}
+
+// --------- Handler principal Netlify ---------
+exports.handler = async (event) => {
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 200, body: 'ok' };
+  }
+  try {
+    const update = JSON.parse(event.body || '{}');
+
+    // Tipos
+    if (update.message) {
+      const msg = update.message;
+      if (msg.photo) {
+        await handlePhoto(msg);
+      } else if (typeof msg.text === 'string') {
+        await handleText(msg);
+      } else {
+        await tg('sendMessage', { chat_id: msg.chat.id, text: 'Mandá una foto o /start.' });
+      }
+    } else if (update.callback_query) {
+      await handleCallback(update.callback_query);
     }
 
-    // Fallback
-    await sendMessage(chatId, "Mandame una foto para empezar, Mar. Para borrar, respondé a tu foto con /eliminar.");
-    return ok();
-
+    return { statusCode: 200, body: JSON.stringify({ ok:true }) };
   } catch (err) {
-    console.error("[tgWebhook handler]", err);
-    return ok({ note:"exception" });
+    console.error('[tgWebhook] error', err);
+    try { await sendAdmin(`Webhook error: ${err.message}`); } catch {}
+    return { statusCode: 200, body: JSON.stringify({ ok:true }) }; // responder 200 para que Telegram no reintente infinito
   }
 };
