@@ -228,7 +228,7 @@ function openCart(){
   const deposit = Math.round(total * 0.5);
   $('#cartTotal').textContent = total.toLocaleString('es-AR');
   $('#cartDeposit').textContent = deposit.toLocaleString('es-AR');
-  $('#payLink').href = "https://www.mercadopago.com.ar/checkout/v1/redirect?preference-id=LINK_LIBRE"; // tu link libre real
+  $('#payLink').href = "https://link.mercadopago.com.ar/sofymdn"; // tu link libre real
   $('#cartModal').showModal();
 }
 
