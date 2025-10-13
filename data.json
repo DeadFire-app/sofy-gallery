@@ -15,7 +15,8 @@
         "xl"
       ],
       "price": 20,
-      "createdAt": "2025-10-13T20:06:14.490Z"
+      "createdAt": "2025-10-13T20:06:14.490Z",
+      "deleted": true
     }
   ]
 }
