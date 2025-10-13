@@ -1,22 +1,10 @@
-{
-  "items": [
-    {
-      "id": 1760385974490,
-      "title": "Ejemplo",
-      "description": "Tela: Modal · Talles: XL · Precio: $20 ARS",
-      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_12.jpg",
-      "images": [
-        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_12.jpg",
-        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_13.jpg",
-        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_14.jpg"
-      ],
-      "tags": [
-        "modal",
-        "xl"
-      ],
-      "price": 20,
-      "createdAt": "2025-10-13T20:06:14.490Z",
-      "deleted": true
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "title": "Remera Oversize",
+    "description": "Tela: Algodón premium · Talles: S, M, L, XL · Precio: $18999 ARS",
+    "image": "https://TU-URL-DE-IMAGEN", 
+    "tags": ["algodon", "remera", "negra"],
+    "createdAt": "2025-01-01T00:00:00.000Z"
+  }
+]
