@@ -3,76 +3,127 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>catálogo sofy</title>
-  <meta name="description" content="catálogo sofy — galería vertical con paginación y búsqueda." />
+  <title>catálogo sofy mdn</title>
+  <meta name="description" content="sofy mdn — catálogo de reventa con galería vertical, paginación, búsqueda y carrito." />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <!-- ====== Splash EXÓTICO Pro (triple canvas + layers extras) ====== -->
+  <!-- Splash: loader circular + título + siluetas -->
   <div id="splash" class="splash" aria-hidden="true">
-    <!-- tus tres canvases (pueden estar en blanco; los dejo para compatibilidad) -->
-    <canvas id="c-bg" class="splash-canvas"></canvas>
-    <canvas id="c-mid" class="splash-canvas"></canvas>
-    <canvas id="c-fg" class="splash-canvas"></canvas>
+    <!-- Capa de ambiente (glow) -->
+    <div class="splash-ambient" aria-hidden="true"></div>
 
-    <!-- Partículas livianas -->
-    <div class="s-particles" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span>
+    <!-- Siluetas que suben con slow-motion -->
+    <div class="silhouettes" aria-hidden="true">
+      <div class="sil sil-hanger" style="--x:10%; --delay:0s;   --sz:1;"></div>
+      <div class="sil sil-shirt"  style="--x:22%; --delay:.4s;  --sz:1.1;"></div>
+      <div class="sil sil-dress"  style="--x:36%; --delay:.8s;  --sz:.95;"></div>
+      <div class="sil sil-bag"    style="--x:48%; --delay:1.1s; --sz:1.05;"></div>
+      <div class="sil sil-tag"    style="--x:62%; --delay:.2s;  --sz:.9;"></div>
+      <div class="sil sil-hanger" style="--x:75%; --delay:.6s;  --sz:1.15;"></div>
+      <div class="sil sil-shirt"  style="--x:88%; --delay:1.4s; --sz:1;"></div>
+      <div class="sil sil-dress only-desktop" style="--x:5%;  --delay:1.2s; --sz:.9;"></div>
+      <div class="sil sil-bag   only-desktop" style="--x:94%; --delay:.9s;  --sz:1.1;"></div>
     </div>
 
-    <!-- Anillos y brillo -->
-    <div class="s-rings" aria-hidden="true">
-      <i class="r1"></i><i class="r2"></i><i class="r3"></i>
+    <!-- Core (siempre arriba) -->
+    <div class="splash-core">
+      <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="track" cx="60" cy="60" r="46" />
+        <circle class="spin"  cx="60" cy="60" r="46" />
+        <circle class="pulse" cx="60" cy="60" r="22" />
+      </svg>
+      <h1 class="splash-title"><span>sofy</span> mdn</h1>
+      <div class="splash-sub">catálogo de reventa</div>
     </div>
-
-    <div class="splash-center">
-      <h1 class="logo-word" aria-label="sofy">
-        <span class="ch s">s</span><span class="ch o">o</span><span class="ch f">f</span><span class="ch y">y</span>
-      </h1>
-      <div class="logo-sub">catálogo</div>
-      <div class="logo-glow" aria-hidden="true"></div>
-
-      <!-- Barra de progreso real -->
-      <div class="progress">
-        <div id="s-progress" class="progress-bar"></div>
-      </div>
-    </div>
-
-    <!-- Barrido de luz -->
-    <div class="s-shimmer" aria-hidden="true"></div>
   </div>
 
-  <!-- Fondo animado (suave después del splash) -->
+  <!-- Fondo suave (detrás del contenido) -->
   <div class="bg-animated" aria-hidden="true"></div>
 
-  <!-- Encabezado / Menú -->
   <header class="container header">
-    <h1 class="title">catálogo <span>sofy</span></h1>
+    <h1 class="title">catálogo <span>sofy mdn</span></h1>
+
     <div class="controls">
+      <!-- Menú -->
+      <button id="hamburger" class="icon-btn" aria-label="Menú">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"/></svg>
+      </button>
+
+      <!-- Búsqueda -->
       <label class="search-wrap">
-        <input id="searchInput" type="search" placeholder="Buscar: algodón remera negra…" aria-label="Buscar productos" />
+        <input id="searchInput" type="search" placeholder="Buscar: algodon remera negra…" aria-label="Buscar productos" />
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16a6.471 6.471 0 0 0 4.23-1.57l.27.28v.79L20 21.5 21.5 20l-6-6zM4 9.5C4 6.46 6.46 4 9.5 4S15 6.46 15 9.5 12.54 15 9.5 15 4 12.54 4 9.5z"></path>
         </svg>
       </label>
+
       <span id="countInfo" class="count-info" aria-live="polite"></span>
+
+      <!-- Carrito -->
+      <button id="btnCart" class="icon-btn" aria-label="Carrito">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a2 2 0 1 0 .001 3.999A2 2 0 0 0 7 18zm10 0a2 2 0 1 0 .001 3.999A2 2 0 0 0 17 18zM7.16 14h9.53c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 21.18 5H6.21L5.27 3H2v2h2l3.6 7.59L5.25 14h1.91z"/></svg>
+      </button>
     </div>
   </header>
 
-  <!-- Contenido principal -->
+  <!-- Menú hamburguesa -->
+  <nav id="sideMenu" class="side-menu" aria-hidden="true">
+    <button class="close-menu" id="closeMenu" aria-label="Cerrar">×</button>
+    <ul>
+      <li><button class="menu-link" data-section="contacto">Contacto</button></li>
+      <li><button class="menu-link" data-section="pagos">Cómo pagar</button></li>
+      <li><button class="menu-link" data-section="revendedora">¿Querés ser revendedora?</button></li>
+      <li><button class="menu-link" data-section="info">Información</button></li>
+      <li><button class="menu-link" data-section="soporte">Soporte</button></li>
+    </ul>
+    <div id="menuContent" class="menu-content"></div>
+  </nav>
+
   <main class="container">
     <section id="gallery" class="grid" aria-live="polite"></section>
     <nav id="pagination" class="pagination" aria-label="Paginación"></nav>
   </main>
 
   <footer class="container footer">
-    <small>© <span id="year"></span> Programado por Fabricio Agüero - Nexora 💫</small>
+    <small>© <span id="year"></span> sofy mdn — hecho a mano.</small>
   </footer>
 
+  <!-- Modal Detalle -->
+  <dialog id="detailModal" class="info-modal">
+    <button class="modal-x" data-close="detail">×</button>
+    <div class="detail-body">
+      <div id="detailImages" class="slider"></div>
+      <div class="detail-text">
+        <h3 id="detailTitle"></h3>
+        <p id="detailDesc"></p>
+        <div id="detailTags" class="tags"></div>
+        <div class="detail-actions">
+          <button id="addToCart" class="primary-btn">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Modal Carrito -->
+  <dialog id="cartModal" class="info-modal">
+    <button class="modal-x" data-close="cart">×</button>
+    <div class="info-body">
+      <h3>Tu carrito</h3>
+      <div id="cartItems"></div>
+      <div class="cart-summary">
+        <div>Total: $<span id="cartTotal">0</span> ARS</div>
+        <div>Seña 50%: $<span id="cartDeposit">0</span> ARS</div>
+      </div>
+      <p class="note">Antes de pagar, recordá que se abona primero el 50% en concepto de seña.</p>
+      <a id="payLink" href="#" target="_blank" rel="noopener" class="primary-btn">Pagar con Mercado Pago</a>
+      <p class="note small">Luego de pagar, enviá el comprobante por WhatsApp al número indicado.</p>
+    </div>
+  </dialog>
+
   <noscript>
-    <div class="container" style="margin:1rem auto;color:#ff5aa3">
+    <div class="container" style="margin:1rem auto;color:#e91e63">
       Necesitás habilitar JavaScript para ver el catálogo.
     </div>
   </noscript>
