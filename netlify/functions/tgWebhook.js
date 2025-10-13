@@ -52,7 +52,31 @@ const FABRICS = [
   'poliester',      
   'rayón',
   'rayon',          
-  'hawaii'          
+  'hawaii',
+  'CEY',
+  'Jersey',
+  'sastrero con spandex'
+  'sastrero con lycra'
+  'sastrero barbie',
+  'cey lino',
+  'lino morley con lycra',
+  'microfibra con lycra',
+  'crochet algodon con lycra',
+  'crochet con lycra',
+  'tylor con lycra',
+  'poplin',
+  'saten'
+  'saten sastrero',
+  'crep sastrero',
+  'morley lino',
+  'morley lino con lycra',
+  'strech con lycra',
+  'hilo Spandex',
+  'tull con stras',
+  'rompeviento',
+  'fibrana',
+  'hawaii con broderie',
+  'algodon rustico',        
 ];
 
 const SIZES = ['1 ( S )', '2 ( M )', '3 ( L )', '4 ( XL )', '5 ( XXL )', '6 ( XXXL )', '7', '8', '9', '10', '11', '12'];
