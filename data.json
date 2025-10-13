@@ -16,7 +16,8 @@
         "s"
       ],
       "price": 20,
-      "createdAt": "2025-10-13T17:02:23.323Z"
+      "createdAt": "2025-10-13T17:02:23.323Z",
+      "deleted": true
     }
   ]
 }
