@@ -1,6 +1,27 @@
 {
   "items": [
     {
+      "id": 1760532385222,
+      "title": "Oxford 3 lineas",
+      "description": "Tela: Lycra · Talles: 2 ( M ), 3 ( L ), 5 ( XXL ), 4 ( XL ) · Precio: $13.000 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_33.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_33.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_34.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_35.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_36.jpg"
+      ],
+      "tags": [
+        "lycra",
+        "2 ( m )",
+        "3 ( l )",
+        "5 ( xxl )",
+        "4 ( xl )"
+      ],
+      "price": 13000,
+      "createdAt": "2025-10-15T12:46:25.222Z"
+    },
+    {
       "id": 1760532302037,
       "title": "Vestido damaris",
       "description": "Tela: CEY · Talles: 1 ( S ), 2 ( M ), 3 ( L ), 4 ( XL ), 5 ( XXL ), 6 ( XXXL ), 7 · Precio: $25.000 ARS",
