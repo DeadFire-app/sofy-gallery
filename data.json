@@ -1,6 +1,30 @@
 {
   "items": [
     {
+      "id": 1760532028853,
+      "title": "Vestido tatiana",
+      "description": "Tela: CEY · Talles: 1 ( S ), 2 ( M ), 3 ( L ), 4 ( XL ), 5 ( XXL ) · Precio: $27.000 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_18.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_18.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_19.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_20.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_21.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_22.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_23.jpg"
+      ],
+      "tags": [
+        "cey",
+        "1 ( s )",
+        "2 ( m )",
+        "3 ( l )",
+        "4 ( xl )",
+        "5 ( xxl )"
+      ],
+      "price": 27000,
+      "createdAt": "2025-10-15T12:40:28.853Z"
+    },
+    {
       "id": 1760390252429,
       "title": "Ja",
       "description": "Tela: Algodon rustico · Talles: 11 · Precio: $8 ARS",
