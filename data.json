@@ -1,6 +1,27 @@
 {
   "items": [
     {
+      "id": 1760532487250,
+      "title": "Remera con lentejuelas",
+      "description": "Tela: Jersey · Talles: 2 ( M ), 3 ( L ), 4 ( XL ), 5 ( XXL ) · Precio: $16.000 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_37.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_37.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_38.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_39.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_40.jpg"
+      ],
+      "tags": [
+        "jersey",
+        "2 ( m )",
+        "3 ( l )",
+        "4 ( xl )",
+        "5 ( xxl )"
+      ],
+      "price": 16000,
+      "createdAt": "2025-10-15T12:48:07.250Z"
+    },
+    {
       "id": 1760532385222,
       "title": "Oxford 3 lineas",
       "description": "Tela: Lycra · Talles: 2 ( M ), 3 ( L ), 5 ( XXL ), 4 ( XL ) · Precio: $13.000 ARS",
