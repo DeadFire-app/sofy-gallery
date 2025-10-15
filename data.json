@@ -1,6 +1,22 @@
 {
   "items": [
     {
+      "id": 1760532547423,
+      "title": "Vestido largo jaspeado",
+      "description": "Tela: Morley · Talles: — · Precio: $15.500 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_41.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_41.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_42.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_43.jpg"
+      ],
+      "tags": [
+        "morley"
+      ],
+      "price": 15500,
+      "createdAt": "2025-10-15T12:49:07.423Z"
+    },
+    {
       "id": 1760532487250,
       "title": "Remera con lentejuelas",
       "description": "Tela: Jersey · Talles: 2 ( M ), 3 ( L ), 4 ( XL ), 5 ( XXL ) · Precio: $16.000 ARS",
