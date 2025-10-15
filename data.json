@@ -1,6 +1,31 @@
 {
   "items": [
     {
+      "id": 1760532302037,
+      "title": "Vestido damaris",
+      "description": "Tela: CEY · Talles: 1 ( S ), 2 ( M ), 3 ( L ), 4 ( XL ), 5 ( XXL ), 6 ( XXXL ), 7 · Precio: $25.000 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_24.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_24.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_26.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_28.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_30.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_31.jpg"
+      ],
+      "tags": [
+        "cey",
+        "1 ( s )",
+        "2 ( m )",
+        "3 ( l )",
+        "4 ( xl )",
+        "5 ( xxl )",
+        "6 ( xxxl )",
+        "7"
+      ],
+      "price": 25000,
+      "createdAt": "2025-10-15T12:45:02.037Z"
+    },
+    {
       "id": 1760532167215,
       "title": "Vestido damaris",
       "description": "Tela: CEY · Talles: 1 ( S ), 2 ( M ), 3 ( L ), 4 ( XL ), 5 ( XXL ), 6 ( XXXL ), 7 · Precio: $25.000 ARS",
