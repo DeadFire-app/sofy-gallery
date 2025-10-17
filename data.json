@@ -1,6 +1,21 @@
 {
   "items": [
     {
+      "id": 1760710994616,
+      "title": "Remera tesa",
+      "description": "Tela: Viscosa · Talles: — · Precio: $10.500 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_57.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_57.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_58.jpg"
+      ],
+      "tags": [
+        "viscosa"
+      ],
+      "price": 10500,
+      "createdAt": "2025-10-17T14:23:14.616Z"
+    },
+    {
       "id": 1760710906248,
       "title": "Short hebilla",
       "description": "Tela: Bengalina · Talles: 2 ( M ), 3 ( L ), 4 ( XL ), 5 ( XXL ) · Precio: $11.500 ARS",
