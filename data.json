@@ -1,6 +1,22 @@
 {
   "items": [
     {
+      "id": 1760711064421,
+      "title": "Remeron acasia",
+      "description": "Tela: Viscosa · Talles: — · Precio: $12.500 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_54.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_54.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_55.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_56.jpg"
+      ],
+      "tags": [
+        "viscosa"
+      ],
+      "price": 12500,
+      "createdAt": "2025-10-17T14:24:24.421Z"
+    },
+    {
       "id": 1760710994616,
       "title": "Remera tesa",
       "description": "Tela: Viscosa · Talles: — · Precio: $10.500 ARS",
