@@ -1,6 +1,22 @@
 {
   "items": [
     {
+      "id": 1760730904119,
+      "title": "Body italia",
+      "description": "Tela: Morley · Talles: — · Precio: $9.900 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_64.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_64.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_65.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_66.jpg"
+      ],
+      "tags": [
+        "morley"
+      ],
+      "price": 9900,
+      "createdAt": "2025-10-17T19:55:04.119Z"
+    },
+    {
       "id": 1760711064421,
       "title": "Remeron acasia",
       "description": "Tela: Viscosa · Talles: — · Precio: $12.500 ARS",
