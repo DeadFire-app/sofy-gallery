@@ -1,6 +1,30 @@
 {
   "items": [
     {
+      "id": 1760924974359,
+      "title": "CAMPERA RUSTICA💕\nBORDADA",
+      "description": "Tela: Rústico · Talles: 1 ( S ), 2 ( M ), 3 ( L ), 4 ( XL ), 5 ( XXL ) · Precio: $22.000 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_101.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_101.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_102.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_103.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_104.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_105.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_106.jpg"
+      ],
+      "tags": [
+        "rústico",
+        "1 ( s )",
+        "2 ( m )",
+        "3 ( l )",
+        "4 ( xl )",
+        "5 ( xxl )"
+      ],
+      "price": 22000,
+      "createdAt": "2025-10-20T01:49:34.359Z"
+    },
+    {
       "id": 1760924762358,
       "title": "♣︎ REMERA HK ♣︎\nTALLE UNICO",
       "description": "Tela: Algodón · Talles: — · Precio: $9.000 ARS",
