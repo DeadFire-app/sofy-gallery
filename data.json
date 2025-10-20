@@ -1,6 +1,23 @@
 {
   "items": [
     {
+      "id": 1760923559951,
+      "title": "★ BRETEL SOFY ★",
+      "description": "Tela: Bremer · Talles: — · Precio: $13.000 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_74.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_74.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_75.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_76.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_77.jpg"
+      ],
+      "tags": [
+        "bremer"
+      ],
+      "price": 13000,
+      "createdAt": "2025-10-20T01:25:59.951Z"
+    },
+    {
       "id": 1760922612410,
       "title": "♣︎BAGGI JEANS RÍGIDO ÓXIDO LOCALIZADO Y CELESTE ♣︎",
       "description": "Tela: Jean · Talles: — · Precio: $18.000 ARS",
