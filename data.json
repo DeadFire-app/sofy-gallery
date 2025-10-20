@@ -1,6 +1,23 @@
 {
   "items": [
     {
+      "id": 1760925395115,
+      "title": "REMERON KITY💕\nALGODÓN\nTALLE ÚNICO",
+      "description": "Tela: Algodón · Talles: — · Precio: $13.000 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_112.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_112.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_113.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_114.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_115.jpg"
+      ],
+      "tags": [
+        "algodón"
+      ],
+      "price": 13000,
+      "createdAt": "2025-10-20T01:56:35.115Z"
+    },
+    {
       "id": 1760925236219,
       "title": "🔥CONJUNTO DEPORTIVO 🔥\n\n✅️BORDADO",
       "description": "Tela: Lycra · Talles: 2 ( M ), 1 ( S ), 3 ( L ) · Precio: $19.999 ARS",
