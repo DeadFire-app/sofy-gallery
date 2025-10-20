@@ -1,6 +1,22 @@
 {
   "items": [
     {
+      "id": 1760924433487,
+      "title": "Viole",
+      "description": "Tela: Fibrana · Talles: 6 ( XXXL ) · Precio: $3 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_88.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_88.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_89.jpg"
+      ],
+      "tags": [
+        "fibrana",
+        "6 ( xxxl )"
+      ],
+      "price": 3,
+      "createdAt": "2025-10-20T01:40:33.487Z"
+    },
+    {
       "id": 1760923983068,
       "title": "♣︎SHORT POLLERA TAJO DE BENGALINA ♣︎",
       "description": "Tela: Bengalina · Talles: 2 ( M ), 3 ( L ), 4 ( XL ), 5 ( XXL ) · Precio: $11.000 ARS",
