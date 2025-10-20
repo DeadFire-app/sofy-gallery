@@ -1,6 +1,27 @@
 {
   "items": [
     {
+      "id": 1760926014818,
+      "title": "SHORT CALZA🔥\n2 al 5",
+      "description": "Tela: Spandex · Talles: 2 ( M ), 3 ( L ), 5 ( XXL ), 4 ( XL ) · Precio: $13.000 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_118.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_118.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_119.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_120.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_121.jpg"
+      ],
+      "tags": [
+        "spandex",
+        "2 ( m )",
+        "3 ( l )",
+        "5 ( xxl )",
+        "4 ( xl )"
+      ],
+      "price": 13000,
+      "createdAt": "2025-10-20T02:06:54.818Z"
+    },
+    {
       "id": 1760925615399,
       "title": "J",
       "description": "Tela: Morley · Talles: 11 · Precio: $2 ARS",
