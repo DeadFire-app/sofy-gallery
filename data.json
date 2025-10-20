@@ -1,6 +1,22 @@
 {
   "items": [
     {
+      "id": 1760924762358,
+      "title": "♣︎ REMERA HK ♣︎\nTALLE UNICO",
+      "description": "Tela: Algodón · Talles: — · Precio: $9.000 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_98.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_98.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_99.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_100.jpg"
+      ],
+      "tags": [
+        "algodón"
+      ],
+      "price": 9000,
+      "createdAt": "2025-10-20T01:46:02.358Z"
+    },
+    {
       "id": 1760924433487,
       "title": "Viole",
       "description": "Tela: Fibrana · Talles: 6 ( XXXL ) · Precio: $3 ARS",
