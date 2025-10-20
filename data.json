@@ -1,6 +1,27 @@
 {
   "items": [
     {
+      "id": 1760923983068,
+      "title": "♣︎SHORT POLLERA TAJO DE BENGALINA ♣︎",
+      "description": "Tela: Bengalina · Talles: 2 ( M ), 3 ( L ), 4 ( XL ), 5 ( XXL ) · Precio: $11.000 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_84.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_84.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_85.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_86.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_87.jpg"
+      ],
+      "tags": [
+        "bengalina",
+        "2 ( m )",
+        "3 ( l )",
+        "4 ( xl )",
+        "5 ( xxl )"
+      ],
+      "price": 11000,
+      "createdAt": "2025-10-20T01:33:03.068Z"
+    },
+    {
       "id": 1760923812198,
       "title": "♣︎REMERA ESPEJO RAYADO ♣︎",
       "description": "Tela: Morley · Talles: — · Precio: $9.000 ARS",
