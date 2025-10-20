@@ -1,6 +1,25 @@
 {
   "items": [
     {
+      "id": 1760923812198,
+      "title": "♣︎REMERA ESPEJO RAYADO ♣︎",
+      "description": "Tela: Morley · Talles: — · Precio: $9.000 ARS",
+      "image": "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_78.jpg",
+      "images": [
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_78.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_79.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_80.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_81.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_82.jpg",
+        "https://api.telegram.org/file/bot8263299655:AAFpA8qJI61IZ0j4wwiVmPp6IQ_SBXhFINw/photos/file_83.jpg"
+      ],
+      "tags": [
+        "morley"
+      ],
+      "price": 9000,
+      "createdAt": "2025-10-20T01:30:12.198Z"
+    },
+    {
       "id": 1760923559951,
       "title": "★ BRETEL SOFY ★",
       "description": "Tela: Bremer · Talles: — · Precio: $13.000 ARS",
