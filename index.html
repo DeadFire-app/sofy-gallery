@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>catálogo sofy mdn</title>
+  <meta name="description" content="sofy mdn — catálogo de reventa con galería vertical, paginación, búsqueda y carrito." />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- Splash: loader circular + título + siluetas -->
+  <div id="splash" class="splash" aria-hidden="true">
+    <div class="splash-ambient" aria-hidden="true"></div>
+
+    <div class="silhouettes" aria-hidden="true">
+      <div class="sil sil-hanger" style="--x:10%; --delay:0s;   --sz:1;"></div>
+      <div class="sil sil-shirt"  style="--x:22%; --delay:.4s;  --sz:1.1;"></div>
+      <div class="sil sil-dress"  style="--x:36%; --delay:.8s;  --sz:.95;"></div>
+      <div class="sil sil-bag"    style="--x:48%; --delay:1.1s; --sz:1.05;"></div>
+      <div class="sil sil-tag"    style="--x:62%; --delay:.2s;  --sz:.9;"></div>
+      <div class="sil sil-hanger" style="--x:75%; --delay:.6s;  --sz:1.15;"></div>
+      <div class="sil sil-shirt"  style="--x:88%; --delay:1.4s; --sz:1;"></div>
+      <div class="sil sil-dress only-desktop" style="--x:5%;  --delay:1.2s; --sz:.9;"></div>
+      <div class="sil sil-bag   only-desktop" style="--x:94%; --delay:.9s;  --sz:1.1;"></div>
+    </div>
+
+    <div class="splash-core">
+      <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="track" cx="60" cy="60" r="46" />
+        <circle class="spin"  cx="60" cy="60" r="46" />
+        <circle class="pulse" cx="60" cy="60" r="22" />
+      </svg>
+      <h1 class="splash-title"><span>sofy</span> mdn</h1>
+      <div class="splash-sub">catálogo de reventa</div>
+    </div>
+  </div>
+
+  <!-- Fondo suave (detrás del contenido) -->
+  <div class="bg-animated" aria-hidden="true"></div>
+
+  <!-- --- CART PANEL (side-menu) ------------------------------------------------ -->
+  <!-- Debe estar antes del menú en el DOM para que document.querySelector('.side-menu') lo abra -->
+  <aside id="cartPanel" class="side-menu" role="dialog" aria-label="Carrito de compras" aria-hidden="true">
+    <button class="close-menu" id="closeCartPanel" aria-label="Cerrar carrito">×</button>
+    <div class="cart-header" style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-weight:700">Tu carrito</div>
+      <div class="muted" id="cartCount" aria-live="polite">0 items</div>
+    </div>
+
+    <div class="cart-body" id="cartItems" tabindex="0" aria-live="polite">
+      <!-- items renderizados por JS -->
+      <p style="color:var(--muted)">No hay productos aún.</p>
+    </div>
+
+    <div class="cart-footer" style="padding:12px 16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div>Total:</div><div>$<span id="cartTotal">0</span> ARS</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div>Seña 50%:</div><div>$<span id="cartDeposit">0</span> ARS</div>
+      </div>
+      <a id="payLink" href="#" target="_blank" rel="noopener" class="primary-btn" style="display:block;text-align:center">Pagar con Mercado Pago</a>
+
+      <!-- Nuevo: botón para abrir modal de comprobante -->
+      <button id="openReceiptBtn" class="primary-btn" style="margin-top:8px;display:block;text-align:center">Enviar comprobante</button>
+
+      <p class="note small" style="margin-top:10px;color:var(--muted)">
+        Luego de pagar, si Mercado Pago te redirige a este sitio, se te abrirá un formulario para subir el comprobante.
+        También podés enviarlo desde aquí con el botón "Enviar comprobante".
+      </p>
+    </div>
+  </aside>
+  <!-- --------------------------------------------------------------------------- -->
+
+  <header class="container header">
+    <h1 class="title">catálogo <span>sofy mdn</span></h1>
+
+    <div class="controls">
+      <!-- Menú -->
+      <button id="hamburger" class="icon-btn" aria-label="Menú">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"/></svg>
+      </button>
+
+      <!-- Búsqueda -->
+      <label class="search-wrap">
+        <input id="searchInput" type="search" placeholder="Buscar: algodon remera negra…" aria-label="Buscar productos" />
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16a6.471 6.471 0 0 0 4.23-1.57l.27.28v.79L20 21.5 21.5 20l-6-6zM4 9.5C4 6.46 6.46 4 9.5 4S15 6.46 15 9.5 12.54 15 9.5 15 4 12.54 4 9.5z"></path>
+        </svg>
+      </label>
+
+      <span id="countInfo" class="count-info" aria-live="polite"></span>
+
+      <!-- Carrito (abre el panel lateral) -->
+      <button id="btnCart" class="icon-btn" aria-label="Carrito">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a2 2 0 1 0 .001 3.999A2 2 0 0 0 7 18zm10 0a2 2 0 1 0 .001 3.999A2 2 0 0 0 17 18zM7.16 14h9.53c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 21.18 5H6.21L5.27 3H2v2h2l3.6 7.59L5.25 14h1.91z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Menú hamburguesa (usa el id sideMenu que el JS espera) -->
+  <nav id="sideMenu" class="side-menu" aria-hidden="true" role="navigation" aria-label="Menú principal">
+    <button class="close-menu" id="closeMenu" aria-label="Cerrar menú">×</button>
+    <ul>
+      <li><button class="menu-link" data-section="bienvenida">🌷 ¡Bienvenida a Sofy mdn!</button></li>
+      <li><button class="menu-link" data-section="quienes">💕 Quiénes somos</button></li>
+      <li><button class="menu-link" data-section="revendedora">👗 Cómo empezar a ser revendedora</button></li>
+      <li><button class="menu-link" data-section="faq">🎀 Preguntas frecuentes</button></li>
+      <li><button class="menu-link" data-section="soporte">👛 Soporte y contacto</button></li>
+      <li><button class="menu-link" data-section="unite">✨ Unite, vendé, crecé</button></li>
+    </ul>
+    <div id="menuContent" class="menu-content" tabindex="0"></div>
+  </nav>
+
+  <main class="container">
+    <section id="gallery" class="grid" aria-live="polite"></section>
+    <nav id="pagination" class="pagination" aria-label="Paginación"></nav>
+  </main>
+
+  <footer class="container footer">
+    <small>© <span id="year"></span> sofy mdn — hecho a mano.</small>
+  </footer>
+
+  <!-- Modal Detalle (actualizado con Nexora thumbs + talles) -->
+  <dialog id="detailModal" class="info-modal" aria-modal="true" aria-label="Detalle del producto">
+    <button class="modal-x" data-close="detail" aria-label="Cerrar detalle">×</button>
+
+    <div class="detail-body">
+      <!-- IMÁGENES + THUMBS -->
+      <div id="detailImages" class="slider" aria-live="polite" aria-label="Galería de imágenes">
+        <!-- slider + thumbs inyectados por JS -->
+      </div>
+
+      <!-- INFO / TALLAS -->
+      <div class="detail-text">
+        <h3 id="detailTitle"></h3>
+        <p id="detailDesc"></p>
+        <div id="detailTags" class="tags" aria-hidden="false"></div>
+
+        <div id="detailSizes" aria-label="Talles disponibles" style="margin-top:12px;">
+          <!-- talles inyectados por JS (botones .size-btn) -->
+        </div>
+
+        <div class="detail-actions" style="margin-top:14px;">
+          <button id="addToCart" class="primary-btn" aria-label="Agregar al carrito">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Modal / Dialog: Enviar comprobante -->
+  <dialog id="receiptModal" class="info-modal" aria-modal="true" aria-label="Enviar comprobante de pago">
+    <button class="modal-x" data-close="receipt" aria-label="Cerrar comprobante">×</button>
+
+    <div class="detail-body" style="max-width:760px;">
+      <h3 style="margin-top:0">Enviar comprobante de pago</h3>
+      <p>Adjuntá el comprobante (imagen o PDF) y completá tus datos. Luego confirmá para enviar.</p>
+
+      <form id="receiptForm">
+        <div style="margin-bottom:10px;">
+          <label for="receiptFile">Comprobante (imagen / PDF)</label><br>
+          <input id="receiptFile" name="receipt" type="file" accept="image/*,application/pdf" required>
+        </div>
+
+        <div style="margin-bottom:10px;">
+          <label for="receiptName">Nombre completo</label><br>
+          <input id="receiptName" name="name" type="text" placeholder="Nombre y apellido" required>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-bottom:10px;">
+          <div style="flex:1">
+            <label for="receiptPhone">Teléfono</label><br>
+            <input id="receiptPhone" name="phone" type="text" placeholder="11-1234-5678" required>
+          </div>
+          <div style="flex:1">
+            <label for="receiptEmail">Email</label><br>
+            <input id="receiptEmail" name="email" type="email" placeholder="tu@correo.com" required>
+          </div>
+        </div>
+
+        <div id="receiptMsg" role="status" aria-live="polite" style="min-height:1.2em;margin-bottom:8px;color:var(--muted)"></div>
+
+        <div style="display:flex;gap:8px;align-items:center;margin-top:6px;">
+          <button id="receiptSendBtn" type="button" class="primary-btn">Enviar comprobante</button>
+          <button type="button" id="receiptCancelBtn" class="muted-btn">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <noscript>
+    <div class="container" style="margin:1rem auto;color:#e91e63">
+      Necesitás habilitar JavaScript para ver el catálogo.
+    </div>
+  </noscript>
+
+  <script src="./app.js" defer></script>
+
+  <script>
+    // small glue: cerrar panel carrito y menu cuando presionan sus botones de cerrar
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.getElementById('btnCart')?.addEventListener('click', ()=> {
+        // abrir el primer .side-menu (nuestro cartPanel que está arriba en el DOM)
+        document.querySelector('.side-menu')?.classList.add('open');
+      });
+      document.getElementById('closeCartPanel')?.addEventListener('click', ()=> {
+        document.querySelector('.side-menu')?.classList.remove('open');
+      });
+
+      // cerrar menu (bindMenu en app.js también lo gestiona; esto es seguro)
+      document.getElementById('closeMenu')?.addEventListener('click', ()=> {
+        document.getElementById('sideMenu')?.classList.remove('open');
+      });
+
+      // cerrar modal detail (ya lo maneja el JS, pero dejamos el binding para el botón)
+      document.querySelectorAll('.modal-x').forEach(x=>{
+        x.addEventListener('click', (e)=>{
+          const t = e.currentTarget.dataset.close;
+          if (t==='detail') document.getElementById('detailModal')?.close?.();
+          if (t==='receipt') document.getElementById('receiptModal')?.close?.();
+        });
+      });
+
+      // Open receipt modal from button in cart footer
+      document.getElementById('openReceiptBtn')?.addEventListener('click', ()=>{
+        try { document.getElementById('receiptModal')?.showModal(); } catch(e){ /* fallback */ document.getElementById('receiptModal')?.setAttribute('open',''); }
+      });
+
+      // Cancel button inside receipt modal
+      document.getElementById('receiptCancelBtn')?.addEventListener('click', ()=>{
+        try { document.getElementById('receiptModal')?.close(); } catch(e){ document.getElementById('receiptModal')?.removeAttribute('open'); }
+      });
+
+      // Receipt form submit logic
+      const receiptForm = document.getElementById('receiptForm');
+      const receiptSendBtn = document.getElementById('receiptSendBtn');
+      const receiptMsg = document.getElementById('receiptMsg');
+      const MAX_BYTES = window.MAX_RECEIPT_BYTES || (20 * 1024 * 1024); // 20MB por defecto
+
+      receiptSendBtn?.addEventListener('click', async ()=>{
+        receiptMsg.textContent = '';
+        const fileInput = document.getElementById('receiptFile');
+        const name = document.getElementById('receiptName').value.trim();
+        const phone = document.getElementById('receiptPhone').value.trim();
+        const email = document.getElementById('receiptEmail').value.trim();
+
+        if(!fileInput || !fileInput.files || !fileInput.files[0]) { receiptMsg.textContent = 'Seleccioná un comprobante (imagen o PDF).'; return; }
+        if(!name || !phone || !email) { receiptMsg.textContent = 'Completá nombre, teléfono y email.'; return; }
+
+        const file = fileInput.files[0];
+        if(file.size > MAX_BYTES){ receiptMsg.textContent = `El archivo es muy grande (máx ${Math.round(MAX_BYTES/1024/1024)} MB).`; return; }
+
+        // Build FormData
+        const fd = new FormData();
+        fd.append('receipt', file);
+        fd.append('name', name);
+        fd.append('phone', phone);
+        fd.append('email', email);
+
+        // UI state
+        receiptSendBtn.disabled = true;
+        receiptSendBtn.textContent = 'Enviando...';
+
+        try{
+          const res = await fetch('/.netlify/functions/sendReceipt', { method:'POST', body: fd });
+          const json = await res.json();
+          if(json.ok){
+            receiptMsg.style.color = 'green';
+            receiptMsg.textContent = '✅ Comprobante enviado. Gracias — en breve te confirmaremos.';
+            // clear form
+            fileInput.value = '';
+            document.getElementById('receiptName').value = '';
+            document.getElementById('receiptPhone').value = '';
+            document.getElementById('receiptEmail').value = '';
+            // Close modal after short delay
+            setTimeout(()=>{ try{ document.getElementById('receiptModal')?.close(); }catch(e){} }, 900);
+          } else {
+            receiptMsg.style.color = 'crimson';
+            receiptMsg.textContent = 'Error: ' + (json.error || JSON.stringify(json));
+          }
+        }catch(err){
+          receiptMsg.style.color = 'crimson';
+          receiptMsg.textContent = 'Error enviando comprobante: ' + err.message;
+        }finally{
+          receiptSendBtn.disabled = false;
+          receiptSendBtn.textContent = 'Enviar comprobante';
+        }
+      });
+
+      // If the user was redirected from MercadoPago, auto-open the receipt modal.
+      // Detect by query param: ?mp_success=1  OR referrer contains 'mercadopago'
+      try{
+        const urlParams = new URLSearchParams(window.location.search);
+        const mpSuccess = urlParams.get('mp_success');
+        const ref = document.referrer || '';
+        if(mpSuccess === '1' || /mercadopago/i.test(ref) ){
+          // open modal and optionally focus file input
+          setTimeout(()=>{ try{ document.getElementById('receiptModal')?.showModal(); document.getElementById('receiptFile')?.focus(); }catch(e){ document.getElementById('receiptModal')?.setAttribute('open',''); } }, 500);
+        }
+      }catch(e){ /* ignore */ }
+
+    });
+  </script>
+</body>
+</html>
