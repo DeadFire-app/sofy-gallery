@@ -1,0 +1,12 @@
+{
+  "name": "telegram-catalog-bot",
+  "version": "1.0.0",
+  "main": "netlify/functions/tgWebhook.js",
+  "dependencies": {
+    "ioredis": "^5.3.1",
+    "node-fetch": "^2.6.7"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
