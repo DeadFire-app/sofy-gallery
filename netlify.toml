@@ -1,0 +1,15 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type, x-api-key"
+    Access-Control-Allow-Methods = "POST, OPTIONS"
+
+[[redirects]]
+  from = "/webhook"
+  to = "/.netlify/functions/tgWebhook"
+  status = 200
